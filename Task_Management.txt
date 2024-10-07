@@ -1,0 +1,77 @@
+Step 1: Install Nextjs using command: npx create-next-app@latest .
+      - Kindly reply all questions answers, here we will go with typescript
+
+
+Application Created✅
+
+Step 2: run your application with this command: npm run dev
+Step 3: Remove dummy contents from page.tsx and globals.css
+
+Project Creation initiated:
+Project name: Task management with Auth Users.
+
+Step 4: First we will design all pages UI using Chatgpt, Ok now we will create all pages and design the folder structure.
+
+Note: page.tsx file is the entry point of specific folder.
+like to visit register page we will enter url: /register, /login
+
+Step 5: Design Register Page
+Step 6: install package name axios: npm install axios
+Step 7: Send Registration form data to postgresql database and store to db
+Step 8. Create action.ts file and we will write each server code over there itself. to register students, delete student and edit student code will be written in action.ts file.
+
+Step 9: Open pgAdmin4 and create database by giving name like: task_management and then click save, Now click on Query tool and start creating tables for registration and tasks.
+
+Step 10: install package pg with command: npm install pg
+        - this command will allow you to connect with PostgreSQL database and perform queries✅
+
+Step 11: create file db.ts in app/db.ts and config the database
+
+Step 12: Create register table in pgadmin4 using query: 
+ - CREATE TABLE students (
+    id SERIAL PRIMARY KEY,               
+    student_name VARCHAR(100) NOT NULL,  
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,   
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP 
+);
+
+Step 13: now we will insert students into database: 
+     - before we will check tthat student email is already exists or not, if exists then we will persist   him/her from creating record
+     - also we will encrypt password for authentication purpose. we will use bcrypt package for that: npm install bcrypt
+
+Step 14: we create students, now we want to login that student with email and password.
+
+Step 15: Login Ui create it and then allow user to login with email and password, if success get then store student details in cookies and access from there.
+ - install js-cookie to interact with browser cookies to perform set, get methods: npm i js-cookie
+
+Step 16: After success login store data to cookie and send user to on '/' root or whereever u want to redirect it just redirect it.
+
+Step 17: create middleware.ts file, this file will be used to check either the student is logged in or not,
+       - if student logged in, we will redirect him/her to root file or dashboard page
+       - if student is not logged in, then we will prevent student to visit root page or dashboard page
+       - we are checking user logged in or not by cookie name studentData
+
+Step 18: create components folder to store manage components like headers, footer, form and so on.
+
+Step 19: Create Header and display logged student in header along with logout button.
+Step 20: Now create tasks table in PostgreSQL database, just fire this query: 
+CREATE TABLE tasks (
+    task_id SERIAL PRIMARY KEY,          -- Unique identifier for each task
+    student_id INT NOT NULL,             -- Foreign key referencing the student (assuming you have a students table)
+    task_name VARCHAR(255) NOT NULL,     -- Name of the task
+    status VARCHAR(50) NOT NULL,          -- Status of the task (e.g., 'Pending', 'Completed', 'In Progress')
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,  -- Timestamp for when the task was created
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,  -- Timestamp for when the task was last updated
+    FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE -- Assuming a students table exists
+);
+
+Step 21: Create ListTasks components in components and render on page.tsx file and show empty state when no task created by student
+
+Step 22: Create manage-task page to Create/Edit tasks over there and also add this route in middleware to handle unauntenicated user visit.
+
+Step 23: Make components for TaskManageForm in componentns and render it in /manage-task page
+
+Step 24: Valid form to add/edit task in database, and each task will be stored based on student_id
+
+Step 25: In ListTasks components add edit/delete button for each task to edit and delete instantly
